@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>跨域窗口通信</title>
+</head>
+<body>
+<!-- <iframe src="http://localhost:8000/js/cross_domain_child.html" id="myFrame">	
+</iframe> -->
+<script type="text/javascript">
+	window.onload=function(){
+		var popup = window.open('http://localhost:8000/js/cross_domain_child.html', 'title');
+		// var popup = document.getElementById('myFrame').contentWindow;
+		setTimeout(function(){	
+			popup.postMessage('Hello World!',' http://localhost:8000/');
+		},3000)
+	}
+</script>
+</body>
+</html>
+
+
+<!-- 此实验要配合node服务中的cross_domain_child.html模拟跨域 -->

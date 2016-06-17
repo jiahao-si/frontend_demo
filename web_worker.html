@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>利用worker实现js通信</title>
+</head>
+<body>
+<p>开辟一个新线程来运行js，常用来解决性能问题</p>
+<script type="text/javascript">
+	var web=new Worker("./1.js") 
+	web.postMessage("wooow")
+</script>
+</body>
+</html>

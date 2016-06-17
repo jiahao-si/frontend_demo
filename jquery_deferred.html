@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jquery_deferred</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	console.log("测试jquery_deferred")	
+	console.log($.Deferred())
+	//ajax的链式写法
+	var dtd = $.Deferred();
+	$.ajax({
+		method: "POST",
+		url: "/",
+		data: {
+			name: "John",
+			location: "Boston"
+		}
+	}).done(function(data) {
+		console.log('哈，ajax成功');
+		console.log('返回数据是', data);
+	}).then(function(data) {
+		console.log('哈，这个是第二次成功回调');
+		console.log('返回数据是', data);
+		dtd.resolve(6666); //然而没有什么卵用
+	}).fail(function(e) {
+		console.log('哈，ajax失败')
+	})
+	dtd.done(function(data){
+		console.log('由dtd传递过来的数据是',data);      //6666
+	})
+
+	//前端的异步promise写法
+	// var dtd = $.Deferred(); 
+	// var wait = function(dtd){
+	// 	var tasks = function(){
+	// 		alert('执行完毕')
+	// 		dtd.resolve();
+	// 	};
+	// 	setTimeout(tasks,3000);
+	// 	return dtd.promise();   //返回promise对象
+	// }
+	// var d = wait(dtd);
+	// $.when(d)
+	//  .done(function(data){
+	//  	alert('这个是从上级传递过来的数据',data)
+	//  	alert('哈，成功了');
+	//  })
+	//  .fail(function(){
+	//  	alert('哈，失败了');
+	//  })
+
+
+	//数据传递问题
+	// var d1 = $.Deferred();
+	// var d2 = $.Deferred();
+	 
+	// $.when( d1, d2 ).done(function ( v1, v2 ) {
+	//     console.log( v1 ); // "Fish"
+	//     console.log( v2 ); // "Pizza"
+	// });
+	 
+	// d1.resolve( "Fish" );
+	// d2.resolve( "Pizza" );
+</script>
+</body>
+</html>
