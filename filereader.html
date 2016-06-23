@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<title>Image preview example</title>
+</head>
+
+<body onload="loadImageFile();">
+  <form name="uploadForm">
+    <table>
+      <tbody>
+        <tr>
+          <td><img id="uploadPreview" style="width: 100px; height: 100px;"  /></td>
+          <td><input id="uploadImage" type="file"  onchange="loadImageFile();" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><input type="submit" value="Send" /></p>
+  </form>
+<script type="text/javascript">
+    oFReader = new FileReader();
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("uploadPreview").src = oFREvent.target.result;
+    };
+
+    function loadImageFile() {
+      if (document.getElementById("uploadImage").files.length === 0) {
+        return;
+      }
+      var oFile = document.getElementById("uploadImage").files[0];
+
+      oFReader.readAsDataURL(oFile);
+    }
+</script>
+</body>
+</html>
+
+<!-- https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader -->

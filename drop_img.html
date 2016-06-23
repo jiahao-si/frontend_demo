@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>拖拽图片</title>
+</head>
+<body>
+<div style="width: 100px;height: 100px;border: 1px solid #777;" id="dropbox"></div>
+<div style="width: 200px;height: 200px;border: 1px solid #777;" id="previewbox"></div>
+<script type="text/javascript">
+	var dropbox;
+
+	dropbox = document.getElementById("dropbox");
+	dropbox.addEventListener("dragenter", dragenter, false);
+	dropbox.addEventListener("dragover", dragover, false);
+	dropbox.addEventListener("drop", drop, false);
+	function dragenter(e) {
+		e.stopPropagation();
+		e.preventDefault();
+	}
+
+	function dragover(e) {
+		e.stopPropagation();
+		e.preventDefault();
+	}
+
+	function drop(e) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		var dt = e.dataTransfer;
+		var files = dt.files;
+
+		handleFiles(files);
+	}
+
+	function handleFiles(files) {
+		for (var i = 0; i < files.length; i++) {
+			var file = files[i];
+			var imageType = /^image\//;
+
+			if (!imageType.test(file.type)) {
+				continue;
+			}
+
+			var img = document.createElement("img");
+			img.classList.add("obj");
+			img.file = file;
+			// 假设 "preview" 是将要展示图片的 div
+			var preview = document.getElementById("previewbox");
+			preview.appendChild(img);
+
+			var reader = new FileReader();
+			reader.onload = (function(aImg) {
+				return function(e) {
+					aImg.src = e.target.result;
+				};
+			})(img);
+			reader.readAsDataURL(file);
+		}
+	}
+</script>
+</body>
+</html>
